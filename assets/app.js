@@ -40,19 +40,12 @@ database.ref().on("child_added", function (childSnapshot, prevChildKey) {
     var destination = childSnapshot.val().destination;
     var firstTrainTime = childSnapshot.val().firstTrainTime;
     var freq = childSnapshot.val().freq;
-
     firstTrainTime = moment.unix(firstTrainTime).format("HH:mm");
-
     var firstTimeConverted = moment(firstTrainTime, "HH:mm").subtract(1, "days");
- 
     var diffTime = moment().diff(firstTimeConverted, "minutes");
-
     var remainder = (diffTime - 1440) % freq;
-
     var minsAway = freq - remainder;
-
     var nextArrival = moment().add(minsAway, "minutes");
-
     nextArrival = moment(nextArrival).format("LT");
 
     $("#train-info-table > tbody").append("<tr><td>" + trainName + "</td><td>" + destination + "</td><td>" +
